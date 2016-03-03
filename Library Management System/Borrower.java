@@ -6,11 +6,13 @@ public abstract class Borrower{
     Scanner sc = new Scanner(System.in);
     System.out.print("Please eneter the the category: ");
     String c = sc.next();
+    //then search the file and match enter category with already existed category and display it in a list
   }
   public void avaliablity(){
     Scanner sc = new Scanner(System.in);
     System.out.print("Pleas enter the ISBN or the author of the book: ");
     String c = sc.next();
+    //then read and search file for the book and print not avaliable if borrowed else print avaliable.
   }
   
   abstract void checkOut();
