@@ -11,6 +11,7 @@ public class Student extends Borrower{
     }
     else{
       
+      bookBorrowed++;
     }
     
     
@@ -21,6 +22,7 @@ public class Student extends Borrower{
     }
     else{
       
+      bookBorrowed--;
     }
   
   }
