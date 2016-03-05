@@ -5,6 +5,7 @@ public class Teacher extends Borrower{
     }
     else{
       
+      bookBorrowed++;
     }
     
     
@@ -15,6 +16,7 @@ public class Teacher extends Borrower{
     }
     else{
       
+      bookBorrowed--;
     }
   
   }
