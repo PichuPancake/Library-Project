@@ -5,6 +5,23 @@ public class Student extends Borrower{
     month = m;
     day = d;
   }
+  public void checkOut(){
+    if(bookBorrowed ==2){
+      System.out.println("You have already borrowed maixmum amount of books ")
+    }
+    else{
+      
+    }
+    
+    
+  }
+  public void returnBook(){
+    if(bookBorrowed() ==0){
+      System.out.println("You did not borrow any book")
+    }
+    else{
+      
+    }
   
   }
 }
