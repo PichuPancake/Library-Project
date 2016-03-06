@@ -28,6 +28,6 @@ public class Book{
     return otherBook.isbn().equals(this.isbn) && otherBook.name().equals(this.name) && otherBook.author().equals(this.author)&&otherBook.category().equals(this.category;
   }
   public String toString(){
-    return "(" + isbn + ", " + author + "," + title + "," category + "," + status +")\n";
+    return "(" + isbn + ", " + author + "," + name + "," category + "," + status +")\n";
   }
 }
