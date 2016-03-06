@@ -36,15 +36,18 @@ public abstract class Borrower{
     System.out.print("Enter the ISBN");
     String isbn = kb.nextLine();
     String line;
+    int n =0;
     while((line = in.readLine()) !=null){
       for(int j = line.length()-1;j>=0;j--){
         if(line.indexOf(isbn)!=-1){
           System.out.println("available");
+          n=2;
           break;
         }
        }
       }
-    System.out.println("unavailable or does not exist");
+    if(n==0)
+      System.out.println("unavailable or does not exist");
     in.close();
     kb.close();
   }
