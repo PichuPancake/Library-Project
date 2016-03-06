@@ -1,58 +1,77 @@
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
+
 public abstract class Borrower{
-  public int bookBorrowed;
-  public ArrayList<Book> books = new ArrayList<Book>();
-  
   public void browse(){
-    Scanner sc = new Scanner(System.in);
-    System.out.print("Please eneter the the category: ");
-    String c = sc.next();
-    //then search the file and match enter category with already existed category and display it in a list
-    for(int i=0; i<books.size();i++){
-      if(books.get(i).compare(c)){
-        System.out.println(lines.get(i).toString());
+    try{
+    File file = new File("books.txt");
+    BufferedReader in = new BufferedReader(new FileReader(file));
+    Scanner kb = new Scanner(System.in);
+    System.out.print("Enter the category");
+    String category = kb.nextLine();
+    String line;
+    while((line = in.readLine()) !=null){
+      for(int j = line.length()-1;j>=0;j--){
+        if(line.indexOf(category)!=-1)
+          System.out.println(line);
       }
-    }
-  }
-  public void avaliablity(){
-    Scanner sc = new Scanner(System.in);
-    System.out.print("Pleas enter the ISBN or the author of the book: ");
-    String c = sc.next();
-    //then read and search file for the book and print not avaliable if borrowed else print avaliable.
-    int i=0;
-    int t=0;// 1 if book is avaliable, 0 is not
-    while(i<books.size()){
-      if(line.get(i).contains(c)){
-        System.out.println("Book is avaliable to be borrow.");
-        System.out.println("Book: "+ books.get(i).toString());
-        c=lines.size();
-        t=1;
-      }
-      i++;
-    }
-    if(t=0){
-      System.out.println("Book is not avaliable to borrow, Sorry! ");
-    }
-  }
-  public void readFile(){
-    BufferedReader in = new BufferedReader(new FileReader(""));
-    String temp;
-    String[] lineSplit = new String[5];
-    while ((temp = in.readLine()) !=null){
-      lineSplit = temp.split(",")
-      books.add(Book(lineSplit[0],lineSplit[1],lineSplit[2],lineSplit[3],lineSplit[4]));
     }
     in.close();
+    kb.close();
+  } 
+  catch (FileNotFoundException ex) {
+      ex.printStackTrace();
   }
-  public void OverwriteFile(){
+  catch (IOException ex) {
+    ex.printStackTrace();
+  }
+  }
+  public void availability(){
+    try{
+    File file = new File("books.txt");
+    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedReader in = new BufferedReader(new FileReader(file));
+    Scanner kb = new Scanner(System.in);
+    System.out.print("Enter the ISBN");
+    String isbn = kb.nextLine();
+    String line;
+    while((line = in.readLine()) !=null){
+      for(int j = line.length()-1;j>=0;j--){
+        if(line.indexOf(isbn)!=-1)
+          System.out.println(line.substring(line.lastIndexOf(",")+1));
+      }
+    }
+    out.close();
+    in.close();
+    kb.close();
+  }
+    catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+  public int booksBorrowed(String fileName, String l){
+    int booksBorrowed = 0;
+    try{
+    File file = new File(fileName);
+    BufferedReader in = new BufferedReader(new FileReader(file));
+    String line;
+    while((line = in.readLine()) != null)
+      if(line.equals(l))
+        booksBorrowed++;
+    in.close();
+  }
+    catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    return booksBorrowed;
+  }
     
-  }
-  public int BookBorrowed(){
-    return bookBorrowed;
-  }
-  abstract 
-  abstract ArrayList<> accessInfo();
   abstract void checkOut();
   abstract void returnBook();
 }
