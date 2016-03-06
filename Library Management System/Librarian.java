@@ -18,6 +18,8 @@ public class Librarian{
     String textLine = book.getIsbn()+", "+book.getName()+", "+book.getAuthor()+", "+book.getCategory()+", "+book.getStatus();
     out.newLine();
     out.write(textLine,0,textLine.length());
+    out.close();
+    kb.close();
   }
   public void removeBook(){
     BufferedReader in = new BufferedReader(new FileReader("filename.txt"));
@@ -31,17 +33,19 @@ public class Librarian{
       isbnList.add(txtIsbn);
     }
     for(int j = 0; j<isbnList.size();j++)
-      if(isbn.equals(isbnList.get(j)){
+      if(isbn.equals(isbnList.get(j))){
         for(int k = 0; k<j;k++){
           String line = in.readLine();
           int isbnEnd = indexOf(",");
           String txtIsbn = i.substring(0,isbnEnd);
-          if(isbn.equals(txtIsbn){
-            line = line.replace(line, "");
-            out.write("");
+          if(isbn.equals(txtIsbn)){
+            line = line.replace(line,"");
+            out.write(line);
           }
         }
-      }
+      }   
+   in.close();
+   out.close();
   }
 }
-        
+         
