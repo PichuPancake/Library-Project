@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.io.*;
 public abstract class Borrower{
-  public int bookBorrowed;
+  public int bookBorrowed, monthOut,dayOut;
   public ArrayList<String> lines = new ArrayList<String>();
   
   public void browse(){
