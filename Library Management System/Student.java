@@ -51,6 +51,7 @@ public class Student extends Borrower{
             out.write(temp);
             file = new File("students.txt");
             out = new BufferedWriter(new FileWriter(file,true));
+            out.nextLine();
             out.write(checkOutLine);
           }
          }
