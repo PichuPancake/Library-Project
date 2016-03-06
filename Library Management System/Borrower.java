@@ -45,17 +45,14 @@ public abstract class Borrower{
     }
     in.close();
   }
-  public void newFile(){
+  public void OverwriteFile(){
     
   }
   public int BookBorrowed(){
     return bookBorrowed;
   }
-  public void printReceipt(Book b){
-    System.out.println();
-    System.out.println();
-    System.out.println();
-  }
+  abstract 
+  abstract ArrayList<> accessInfo();
   abstract void checkOut();
   abstract void returnBook();
 }
