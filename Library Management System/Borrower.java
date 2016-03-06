@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.io.*;
 public abstract class Borrower{
-  public int bookBorrowed, monthOut,dayOut;
+  public int bookBorrowed;
   public ArrayList<Book> books = new ArrayList<Book>();
   
   public void browse(){
@@ -50,6 +50,11 @@ public abstract class Borrower{
   }
   public int BookBorrowed(){
     return bookBorrowed;
+  }
+  public void printReceipt(Book b){
+    System.out.println();
+    System.out.println();
+    System.out.println();
   }
   abstract void checkOut();
   abstract void returnBook();
