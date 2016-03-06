@@ -5,7 +5,7 @@ public class Librarian{
   public void addBook(){
     try{
     File file = new File("books.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     Scanner kb = new Scanner(System.in);
     System.out.print("ISBN ID of book");
     String isbn = kb.nextLine();
@@ -20,6 +20,7 @@ public class Librarian{
     Book book = new Book(isbn, bookName, author, category, status);
     String textLine = book.getIsbn()+", "+book.getName()+", "+book.getAuthor()+", "+book.getCategory()+", "+book.getStatus();
     out.write(textLine,0,textLine.length());
+    out.newLine();
     out.close();
     kb.close();
   }
@@ -35,29 +36,17 @@ public class Librarian{
     try{
     File file = new File("books.txt");
     BufferedReader in = new BufferedReader(new FileReader(file));
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter ISBN of book");
     String isbn = kb.nextLine();
-    ArrayList<String> isbnList = new ArrayList<String>();
     String line;
-    while((line = in.readLine()) !=null){
-      int isbnEnd = line.indexOf(",");
-      String txtIsbn = line.substring(0,isbnEnd);
-      isbnList.add(txtIsbn);
+    while((line = in.readLine()) !=null)
+      for(int j = line.length()-1;j>=0;j--)
+        if(line.indexOf(isbn)!=-1){
+          line = line.replace(line,"");
+          out.write(line);
     }
-    for(int j = 0; j<isbnList.size();j++)
-      if(isbn.equals(isbnList.get(j))){
-        for(int k = 0; k<j;k++){
-          line = in.readLine();
-          int isbnEnd = line.indexOf(",");
-          String txtIsbn = line.substring(0,isbnEnd);
-          if(isbn.equals(txtIsbn)){
-            line = line.replace(line,"");
-            out.write(line);
-          }
-        }
-      }   
    in.close();
    out.close();
    kb.close();
