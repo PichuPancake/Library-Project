@@ -20,7 +20,7 @@ public class Teacher extends Borrower{
   public void checkOut(){
     try{
     File file = new File("filename.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     BufferedReader in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter ID");
@@ -63,7 +63,7 @@ public class Teacher extends Borrower{
   public void returnBook(){
     try{
     File file = new File("filename.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     BufferedReader in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter ID");
