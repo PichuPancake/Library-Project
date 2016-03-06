@@ -1,11 +1,10 @@
 public class Book{
-  private String isbn, name, author, title, category, status;
+  private String isbn, name, author, category, status;
   
   public Book(i, n, a, t, c, s){
     isbn = i;
     name = n;
     author = a;
-    title = t;
     category = c;
     status = s;
   }
@@ -19,9 +18,6 @@ public class Book{
   public String getAuthor(){
     return author;
   }
-  public String getTItle(){
-    return title;
-  }
   public String getCategory(){
     return category;
   }
@@ -30,5 +26,8 @@ public class Book{
   }
   public String toString(){
     return "(" + isbn + ", " + author + "," + title + "," category + "," + status +")\n";
+  }
+  public boolean matches(Book otherBook){
+    return otherBook.isbn().equals(this.isbn) && otherBook.name().equals(this.name) && otherBook.author().equals(this.author)&&otherBook.category().equals(this.category;
   }
 }
