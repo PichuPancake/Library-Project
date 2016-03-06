@@ -11,6 +11,7 @@ public class Student extends Borrower{
       int s =0//1 if book exist, 0 if book no
       for(int i =0;i<books.size(),i++){
         if(books.get(i).compare(c)){
+          books.remove(i);
           printReceipt(books.get(i));
           i=books.size();
           bookBorrowed++;
