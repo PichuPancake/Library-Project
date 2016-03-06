@@ -12,8 +12,10 @@ public abstract class Borrower{
     String line;
     while((line = in.readLine()) !=null){
       for(int j = line.length()-1;j>=0;j--){
-        if(line.indexOf(category)!=-1)
+        if(line.indexOf(category)!=-1){
           System.out.println(line);
+          break;
+        }
       }
     }
     in.close();
@@ -29,7 +31,6 @@ public abstract class Borrower{
   public void availability(){
     try{
     File file = new File("books.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
     BufferedReader in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter the ISBN");
@@ -37,11 +38,13 @@ public abstract class Borrower{
     String line;
     while((line = in.readLine()) !=null){
       for(int j = line.length()-1;j>=0;j--){
-        if(line.indexOf(isbn)!=-1)
-          System.out.println(line.substring(line.lastIndexOf(",")+1));
+        if(line.indexOf(isbn)!=-1){
+          System.out.println("available");
+          break;
+        }
+       }
       }
-    }
-    out.close();
+    System.out.println("unavailable or does not exist");
     in.close();
     kb.close();
   }
