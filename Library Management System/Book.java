@@ -1,7 +1,7 @@
 public class Book{
   private String isbn, name, author, category, status;
   
-  public Book(i, n, a, t, c, s){
+  public Book(i, n, a, c, s){
     isbn = i;
     name = n;
     author = a;
