@@ -3,7 +3,10 @@ import java.util.*;
 
 public class Librarian{  
   public void addBook(){
-    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("filename.txt")));
+    try{
+    File file = new File("books.txt");
+    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    Scanner kb = new Scanner(System.in);
     System.out.print("ISBN ID of book");
     String isbn = kb.nextLine();
     System.out.print("Book name");
@@ -16,28 +19,39 @@ public class Librarian{
     String status = kb.nextLine();
     Book book = new Book(isbn, bookName, author, category, status);
     String textLine = book.getIsbn()+", "+book.getName()+", "+book.getAuthor()+", "+book.getCategory()+", "+book.getStatus();
-    out.newLine();
     out.write(textLine,0,textLine.length());
     out.close();
     kb.close();
   }
+    catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+    
   public void removeBook(){
-    BufferedReader in = new BufferedReader(new FileReader("filename.txt"));
-    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("filename.txt")));
+    try{
+    File file = new File("books.txt");
+    BufferedReader in = new BufferedReader(new FileReader(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    Scanner kb = new Scanner(System.in);
     System.out.print("Enter ISBN of book");
     String isbn = kb.nextLine();
     ArrayList<String> isbnList = new ArrayList<String>();
-    while(String i = in.readLine() !=null){
-      int isbnEnd = indexOf(",");
-      String txtIsbn = i.substring(0,isbnEnd);
+    String line;
+    while((line = in.readLine()) !=null){
+      int isbnEnd = line.indexOf(",");
+      String txtIsbn = line.substring(0,isbnEnd);
       isbnList.add(txtIsbn);
     }
     for(int j = 0; j<isbnList.size();j++)
       if(isbn.equals(isbnList.get(j))){
         for(int k = 0; k<j;k++){
-          String line = in.readLine();
-          int isbnEnd = indexOf(",");
-          String txtIsbn = i.substring(0,isbnEnd);
+          line = in.readLine();
+          int isbnEnd = line.indexOf(",");
+          String txtIsbn = line.substring(0,isbnEnd);
           if(isbn.equals(txtIsbn)){
             line = line.replace(line,"");
             out.write(line);
@@ -46,6 +60,14 @@ public class Librarian{
       }   
    in.close();
    out.close();
+   kb.close();
+  }
+    catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
   }
 }
          
