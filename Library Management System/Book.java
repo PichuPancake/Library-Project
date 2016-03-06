@@ -1,10 +1,11 @@
 public class Book{
-  private String isbn, name, author, category, status;
+  private String isbn, name, author, title, category, status;
   
-  public Book(i, n, a, c, s){
+  public Book(i, n, a, t, c, s){
     isbn = i;
     name = n;
     author = a;
+    title = t;
     category = c;
     status = s;
   }
@@ -18,10 +19,16 @@ public class Book{
   public String getAuthor(){
     return author;
   }
+  public String getTItle(){
+    return title;
+  }
   public String getCategory(){
     return category;
   }
   public String getStatus(){
     return status;
+  }
+  public String toString(){
+    return "(" + isbn + ", " + author + "," + title + "," category + "," + status +")\n";
   }
 }
