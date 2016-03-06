@@ -20,7 +20,7 @@ public class Student extends Borrower{
   public void checkOut(){
     try{
     File file = new File("books.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     BufferedReader in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter OSIS");
@@ -34,7 +34,7 @@ public class Student extends Borrower{
     System.out.print("Enter official class");
     String offClass = kb.nextLine();
     String checkOutLine = osis + ", " + lastName + ", "+firstName + ", "+grade + ", "+offClass;
-    if(super.booksBorrowed("filename.txt", checkOutLine)>=2)
+    if(super.booksBorrowed("booksborrowed.txt", checkOutLine)>=2)
       System.out.println("You borrowed the max number of books.");
     else{
       System.out.print("Enter the ISBN");
@@ -47,8 +47,10 @@ public class Student extends Borrower{
             line = line.replace(line, "");
             out.write(line);
             file = new File("borrowedbooks.txt");
+            out = new BufferedWriter(new FileWriter(file,true));
             out.write(temp);
             file = new File("students.txt");
+            out = new BufferedWriter(new FileWriter(file,true));
             out.write(checkOutLine);
           }
          }
@@ -69,7 +71,7 @@ public class Student extends Borrower{
   public void returnBook(){
     try{
     File file = new File("borrowedbooks.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
     BufferedReader in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter OSIS");
