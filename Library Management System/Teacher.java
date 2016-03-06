@@ -43,6 +43,7 @@ public class Teacher extends Borrower{
             file = new File("filename2.txt");
             out.write(temp);
             file = new File("filename3.txt");
+            out.nextLine();
             out.write(checkOutLine);
           }
          }
