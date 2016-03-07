@@ -33,19 +33,21 @@ public class Librarian{
   }
     
   public void removeBook(){
-    try{
     File file = new File("books.txt");
-    BufferedReader in = new BufferedReader(new FileReader(file));
-    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+    File tempFile = new File("booksTemp.txt");
+    BufferedReader in = null;
+    BufferedWriter out = null;
+    try{
+    in = new BufferedReader(new FileReader(file));
+    out = new BufferedWriter(new FileWriter(tempFile,true));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter ISBN of book");
     String isbn = kb.nextLine();
     String line;
     while((line = in.readLine()) !=null)
-      for(int j = line.length()-1;j>=0;j--)
-        if(line.indexOf(isbn)!=-1){
-          line = line.replace(line,"");
+      if(!line.contains(isbn)){
           out.write(line);
+          out.newLine();
     }
    in.close();
    out.close();
@@ -57,6 +59,10 @@ public class Librarian{
     catch (IOException ex) {
       ex.printStackTrace();
     }
+    File oldFile = new File("books.txt");
+    oldFile.delete();
+    File newFile = new File("booksTemp.txt");
+    newFile.renameTo(oldFile);
   }
 }
          
