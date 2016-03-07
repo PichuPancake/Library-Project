@@ -18,10 +18,13 @@ public class Student extends Borrower{
   }
   
   public void checkOut(){
-    try{
     File file = new File("books.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
-    BufferedReader in = new BufferedReader(new FileReader(file));
+    File tempFile = new File("booksTemp.txt");
+    BufferedReader in = null;
+    BufferedWriter out = null;
+    try{
+    out = new BufferedWriter(new FileWriter(tempFile,true));
+    in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter OSIS");
     String osis = kb.nextLine();
@@ -34,82 +37,92 @@ public class Student extends Borrower{
     System.out.print("Enter official class");
     String offClass = kb.nextLine();
     String checkOutLine = osis + ", " + lastName + ", "+firstName + ", "+grade + ", "+offClass;
-    if(super.booksBorrowed("booksborrowed.txt", checkOutLine)>=2)
+    if(super.booksBorrowed("borrowedbooks.txt", checkOutLine)>=2)
       System.out.println("You borrowed the max number of books.");
     else{
       System.out.print("Enter the ISBN");
       String isbn = kb.nextLine();
       String line;
       while((line = in.readLine()) !=null){
-        for(int j = 0;j<line.length();j--){
-          if(line.indexOf(isbn)!=-1){
-            String temp = line;
-            line = line.replace(line, "");
-            out.write(line);
-            file = new File("borrowedbooks.txt");
-            out = new BufferedWriter(new FileWriter(file,true));
-            out.write(temp);
-            file = new File("students.txt");
-            out = new BufferedWriter(new FileWriter(file,true));
-            out.nextLine();
-            out.write(checkOutLine);
-          }
-         }
-       }
-     }
+        if(!line.contains(isbn)){
+          out.write(line);
+          out.newLine();
+        }
+        if(line.contains(isbn)){
+        BufferedWriter out2 = new BufferedWriter(new FileWriter("borrowedbooks.txt",true));
+        out2.write(line);
+        out2.newLine();
+        out2.close();
+        BufferedWriter out3 = new BufferedWriter(new FileWriter("students.txt",true));
+        out3.write(checkOutLine);
+        out3.newLine();
+        out3.close();
+        }
+      }
     kb.close();
     out.close();
     in.close();
   }
+    }
     catch (FileNotFoundException ex) {
       ex.printStackTrace();
     }
     catch (IOException ex) {
       ex.printStackTrace();
     }
+    File oldFile = new File("books.txt");
+    oldFile.delete();
+    File newFile = new File("booksTemp.txt");
+    newFile.renameTo(oldFile);
   }
   
   public void returnBook(){
+    File file = new File("borrowedBooks.txt");
+    File tempFile = new File("borrowedBooksTemp.txt");
+    File file2 = new File("students.txt");
+    File tempFile2 = new File("studentsTemp.txt");
+    BufferedReader in = null;
+    BufferedWriter out = null;
+    BufferedReader in2 = null;
+    BufferedWriter out2 = null;
     try{
-    File file = new File("borrowedbooks.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
-    BufferedReader in = new BufferedReader(new FileReader(file));
+    out = new BufferedWriter(new FileWriter(tempFile,true));
+    in = new BufferedReader(new FileReader(file));
+    out2 = new BufferedWriter(new FileWriter(tempFile2,true));
+    in2 = new BufferedReader(new FileReader(file2));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter OSIS");
     String osis = kb.nextLine();
-    System.out.print("Enter last name");
-    String lastName = kb.nextLine();
-    System.out.print("Enter first name");
-    String firstName = kb.nextLine();
-    System.out.print("Enter grade");
-    String grade = kb.nextLine();
-    System.out.print("Enter official class");
-    String offClass = kb.nextLine();
-    String checkOutLine = osis + ", " + lastName + ", "+firstName + ", "+grade + ", "+offClass;
     System.out.print("Enter the ISBN");
     String isbn = kb.nextLine();
     String line;
     while((line = in.readLine()) !=null){
-      for(int j = 0;j<line.length();j--){
-        if(line.indexOf(isbn)!=-1){
-          String temp = line;
-          line = line.replace(line, "");
+        if(!line.contains(isbn)){
           out.write(line);
-          file = new File("books.txt");
-          out.write(temp);
-          file = new File("teachers.txt");
-          while((line = in.readLine()) != null){
-            if(line.equals(checkOutLine)){
-              line = line.replace(line, "");
-              break;
-            }
+          out.newLine();
+        }
+        if(line.contains(isbn)){
+          BufferedWriter out3 = new BufferedWriter(new FileWriter("books.txt",true));
+          out3.write(line);
+          out3.newLine();
+          out3.close();
+          String line2;
+          boolean foundOnce = false;
+          while((line2 = in2.readLine()) != null){
+              if(!line2.contains(osis) || (line2.contains(osis)&&foundOnce)){
+                out2.write(line2);
+                out2.newLine();
+              }
+              if(line2.contains(osis))
+                foundOnce=true;
           }
         }
       }
-    }
     kb.close();
     out.close();
     in.close();
+    out2.close();
+    in2.close();
   }
     catch (FileNotFoundException ex) {
       ex.printStackTrace();
@@ -117,5 +130,13 @@ public class Student extends Borrower{
     catch (IOException ex) {
       ex.printStackTrace();
     }
+    File oldFile = new File("borrowedBooks.txt");
+    oldFile.delete();
+    File newFile = new File("borrowedBooksTemp.txt");
+    newFile.renameTo(oldFile);
+    File oldFile2 = new File("students.txt");
+    oldFile2.delete();
+    File newFile2 = new File("studentsTemp.txt");
+    newFile2.renameTo(oldFile2);
   }
 }
