@@ -37,7 +37,7 @@ public class Student extends Borrower{
     System.out.print("Enter official class");
     String offClass = kb.nextLine();
     String checkOutLine = osis + ", " + lastName + ", "+firstName + ", "+grade + ", "+offClass;
-    if(super.booksBorrowed("borrowedbooks.txt", osis)>=2)
+    if(super.booksBorrowed("students.txt", osis)>=2)
       System.out.println("You borrowed the max number of books.");
     else{
       System.out.print("Enter the ISBN");
