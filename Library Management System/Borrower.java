@@ -63,7 +63,7 @@ public abstract class Borrower{
     BufferedReader in = new BufferedReader(new FileReader(file));
     String line;
     while((line = in.readLine()) != null)
-      if(line.equals(l))
+      if(line.contains(l))
         booksBorrowed++;
     in.close();
   }
