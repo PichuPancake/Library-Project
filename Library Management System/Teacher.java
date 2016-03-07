@@ -18,90 +18,119 @@ public class Teacher extends Borrower{
   }
   
   public void checkOut(){
+    File file = new File("books.txt");
+    File tempFile = new File("booksTemp.txt");
+    BufferedReader in = null;
+    BufferedWriter out = null;
     try{
-    File file = new File("filename.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
-    BufferedReader in = new BufferedReader(new FileReader(file));
+    out = new BufferedWriter(new FileWriter(tempFile,true));
+    in = new BufferedReader(new FileReader(file));
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter ID");
     String id = kb.nextLine();
     System.out.print("Enter name");
     String name = kb.nextLine();
-    String checkOutLine = id + ", "+name;
-    if(super.booksBorrowed("filename.txt", checkOutLine)>=4)
+    String checkOutLine = id + ", " + name;
+    if(super.booksBorrowed("borrowedbooks.txt", checkOutLine)>=2)
       System.out.println("You borrowed the max number of books.");
     else{
       System.out.print("Enter the ISBN");
       String isbn = kb.nextLine();
       String line;
       while((line = in.readLine()) !=null){
-        for(int j = 0;j<line.length();j--){
-          if(line.indexOf(isbn)!=-1){
-            String temp = line;
-            line = line.replace(line, "");
-            out.write(line);
-            file = new File("filename2.txt");
-            out.write(temp);
-            file = new File("filename3.txt");
-            out.nextLine();
-            out.write(checkOutLine);
-          }
-         }
-       }
-     }
+        if(!line.contains(isbn)){
+          out.write(line);
+          out.newLine();
+        }
+        if(line.contains(isbn)){
+        BufferedWriter out2 = new BufferedWriter(new FileWriter("borrowedbooks.txt",true));
+        out2.write(line);
+        out2.newLine();
+        out2.close();
+        BufferedWriter out3 = new BufferedWriter(new FileWriter("teachers.txt",true));
+        out3.write(checkOutLine);
+        out3.newLine();
+        out3.close();
+        }
+      }
     kb.close();
     out.close();
     in.close();
   }
+    }
     catch (FileNotFoundException ex) {
       ex.printStackTrace();
     }
     catch (IOException ex) {
       ex.printStackTrace();
     }
+    File oldFile = new File("books.txt");
+    oldFile.delete();
+    File newFile = new File("booksTemp.txt");
+    newFile.renameTo(oldFile);
   }
   
   public void returnBook(){
+    File file = new File("borrowedBooks.txt");
+    File tempFile = new File("borrowedBooksTemp.txt");
+    File file2 = new File("teachers.txt");
+    File tempFile2 = new File("teacherTemp.txt");
+    BufferedReader in = null;
+    BufferedWriter out = null;
+    BufferedReader in2 = null;
+    BufferedWriter out2 = null;
     try{
-    File file = new File("filename.txt");
-    BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
-    BufferedReader in = new BufferedReader(new FileReader(file));
+    out = new BufferedWriter(new FileWriter(tempFile,true));
+    in = new BufferedReader(new FileReader(file));
+    out2 = new BufferedWriter(new FileWriter(tempFile2,true));
+    in2 = new BufferedReader(new FileReader(file2));
     Scanner kb = new Scanner(System.in);
-    System.out.print("Enter ID");
+    System.out.print("Enter id");
     String id = kb.nextLine();
-    System.out.print("Enter name");
-    String name = kb.nextLine();
-    String checkOutLine = id + ", "+ name;
     System.out.print("Enter the ISBN");
     String isbn = kb.nextLine();
     String line;
     while((line = in.readLine()) !=null){
-      for(int j = 0;j<line.length();j--){
-        if(line.indexOf(isbn)!=-1){
-          String temp = line;
-          line = line.replace(line, "");
+        if(!line.contains(isbn)){
           out.write(line);
-          file = new File("filename2.txt");
-          out.write(temp);
-          file = new File("filename3.txt");
-          while((line = in.readLine()) != null){
-            if(line.equals(checkOutLine)){
-              line = line.replace(line, "");
-              break;
-            }
+          out.newLine();
+        }
+        if(line.contains(isbn)){
+          BufferedWriter out3 = new BufferedWriter(new FileWriter("books.txt",true));
+          out3.write(line);
+          out3.newLine();
+          out3.close();
+          String line2;
+          boolean foundOnce = false;
+          while((line2 = in2.readLine()) != null){
+              if(!line2.contains(id) || (line2.contains(id)&&foundOnce)){
+                out2.write(line2);
+                out2.newLine();
+              }
+              if(line2.contains(id))
+                foundOnce=true;
           }
         }
       }
-    }
     kb.close();
     out.close();
-    in.close();  
-}
+    in.close();
+    out2.close();
+    in2.close();
+  }
     catch (FileNotFoundException ex) {
       ex.printStackTrace();
     }
     catch (IOException ex) {
       ex.printStackTrace();
     }
+    File oldFile = new File("borrowedBooks.txt");
+    oldFile.delete();
+    File newFile = new File("borrowedBooksTemp.txt");
+    newFile.renameTo(oldFile);
+    File oldFile2 = new File("teachers.txt");
+    oldFile2.delete();
+    File newFile2 = new File("teachersTemp.txt");
+    newFile2.renameTo(oldFile2);
   }
 }
