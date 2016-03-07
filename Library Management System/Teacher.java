@@ -31,7 +31,7 @@ public class Teacher extends Borrower{
     System.out.print("Enter name");
     String name = kb.nextLine();
     String checkOutLine = id + ", " + name;
-    if(super.booksBorrowed("borrowedbooks.txt", id)>=2)
+    if(super.booksBorrowed("teachers.txt", id)>=2)
       System.out.println("You borrowed the max number of books.");
     else{
       System.out.print("Enter the ISBN");
