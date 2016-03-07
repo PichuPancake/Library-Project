@@ -3,7 +3,7 @@ import java.util.*;
 public class LibraryTest{
   public static void main(String[] args){
     Scanner kb = new Scanner(System.in);
-    System.out.print("Librarian or borrower? ('librarian' or 'borrower'");
+    System.out.print("Librarian or borrower? ('librarian' or 'borrower')");
     String user = kb.nextLine();
     if(user.toUpperCase().equals("LIBRARIAN")){
       Librarian librarian = new Librarian();
